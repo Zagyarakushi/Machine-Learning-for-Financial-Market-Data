@@ -18,6 +18,20 @@ The work includes:
 
 **Project status:** University project / experimental research.
 
+## Screenshots
+
+Alligator
+
+![Alligator](screenshots/alligator.png)
+
+Bollinger Bands
+
+![Bollinger Bands](screenshots/bollingerbands.png)
+
+MACD
+
+![MACD](screenshots/macd.png)
+
 ## Dataset
 
 The project uses historical Ethereum/GBP market data containing minute-level bid and ask prices.
