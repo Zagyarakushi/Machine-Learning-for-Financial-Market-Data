@@ -1,93 +1,142 @@
 # Machine Learning for Financial Market Data
 
+A machine learning project exploring financial time-series data using technical indicators, feature engineering and predictive models.
 
+The project investigates how traditional machine learning algorithms and neural networks can be applied to Ethereum/GBP market data, with a focus on data preprocessing, model comparison and evaluation.
 
-## Getting started
+## Overview
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Financial market data is noisy, non-stationary and time-dependent. This project explores different modelling approaches for analysing market data and evaluating their predictive performance.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The work includes:
 
-## Add your files
+- Exploratory analysis of Ethereum/GBP bid and ask price data.
+- Feature engineering using technical indicators.
+- Data preprocessing and preparation for supervised learning.
+- Comparison of traditional machine learning algorithms and neural networks.
+- Model evaluation using appropriate performance metrics.
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+**Project status:** University project / experimental research.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/zagyarakushi/machine-learning-financial-market-data.git
-git branch -M main
-git push -uf origin main
-```
+## Dataset
 
-## Integrate with your tools
+The project uses historical Ethereum/GBP market data containing minute-level bid and ask prices.
 
-* [Set up project integrations](https://gitlab.com/zagyarakushi/machine-learning-financial-market-data/-/settings/integrations)
+The dataset is used to investigate the relationship between market features and the selected prediction target.
 
-## Collaborate with your team
+Dataset details:
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+- **Asset:** Ethereum / GBP (ETH/GBP)
+- **Frequency:** Minute-level observations
+- **Price data:** Bid and ask prices
+- **Features:** Price-derived technical indicators and engineered features
+- **Prediction target:** Predict the highest and lowest prices during the next 5 minutes.
+- **Data source:** Dukascopy Bank
 
-## Test and Deploy
+## Feature Engineering
 
-Use the built-in continuous integration in GitLab.
+The project explores technical indicators and derived market features, including:
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+- Relative Strength Index (RSI)
+- Moving Average Convergence Divergence (MACD)
+- Bollinger Bands
+- Moving averages
+- Alligator-style indicator features
 
-***
+These features provide different representations of recent price movements, momentum and volatility.
 
-# Editing this README
+Feature calculations should use only information available at the relevant prediction time. Any rolling calculations, scaling or feature selection must be designed to avoid leaking future information into the training data.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## Models
 
-## Suggestions for a good README
+The experiments explore a range of machine learning approaches.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+| Model family | Models |
+|---|---|
+| Regression | K-Nearest Neighbours, Random Forest, Stochastic Gradient Descent |
+| Gradient boosting | XGBoost |
+| Neural networks | Multilayer Perceptron (MLP), Convolutional Neural Network (CNN), Long Short-Term Memory (LSTM) |
 
-## Name
-Choose a self-explaining name for your project.
+The models are intended for comparison under a consistent evaluation procedure. The exact models, hyperparameters and results should be documented alongside the corresponding experiments.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Methodology
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+The general workflow is:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+1. Load and inspect the historical market data.
+2. Clean and preprocess the observations.
+3. Engineer features from price data and technical indicators.
+4. Define the prediction target and forecast horizon.
+5. Split observations chronologically into training, validation and test sets.
+6. Train models and tune hyperparameters using training and validation data.
+7. Evaluate the final models on held-out test data.
+8. Compare results and discuss limitations.
+
+For time-series data, a chronological split is preferable to a random split because randomly mixing observations can introduce leakage and produce overly optimistic results.
+
+Any normalisation or feature selection should be fitted using training data only.
+
+## Evaluation
+
+Model performance should be assessed using metrics appropriate to the chosen prediction target.
+
+For a continuous price or return prediction task, possible metrics include:
+
+- Mean Absolute Error (MAE)
+- Root Mean Squared Error (RMSE)
+- Coefficient of determination (R²), where appropriate
+
+If the task predicts price direction or another class, classification metrics may be more appropriate.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Zagyarakushi/Machine-Learning-for-Financial-Market-Data/
+cd machine-learning-for-financial-market-data
+```
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Start with the notebooks to explore the data, reproduce feature engineering and inspect model evaluation.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Limitations
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- Financial time series are noisy and their statistical properties can change over time.
+- Strong historical test performance does not guarantee performance on future data.
+- Results can be affected by data quality, feature selection, hyperparameter tuning and leakage.
+- Price-prediction accuracy does not by itself establish trading profitability.
+- Transaction costs, bid-ask spreads, slippage and execution constraints would need to be considered before evaluating a trading strategy.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Future Improvements
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+Potential extensions include:
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- Walk-forward validation and evaluation across different market conditions.
+- Comparison against simple statistical and persistence baselines.
+- More systematic hyperparameter tuning.
+- Analysis of feature importance and model behaviour.
+- Evaluation of robustness across different test periods.
+- Transaction-cost-aware backtesting, if a trading strategy is explicitly implemented.
 
-## License
-For open source projects, say how it is licensed.
+## Technologies
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- Python
+- pandas and NumPy
+- scikit-learn
+- TensorFlow / Keras
+- XGBoost
+- Jupyter Notebook
+- Matplotlib / Seaborn
+
+## Disclaimer
+
+This repository is an educational machine learning project. It is not financial advice and does not establish that any model can reliably predict market prices or generate profitable trading returns.
+
+## Author
+
+**Charles Buckley**
+
+- GitHub: [zagyarakushi](https://github.com/zagyarakushi)
+- GitLab: [zagyarakushi](https://gitlab.com/zagyarakushi)
