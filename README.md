@@ -150,7 +150,5 @@ This repository is an educational machine learning project. It is not financial 
 
 ## Author
 
-**Charles Buckley**
-
 - GitHub: [zagyarakushi](https://github.com/zagyarakushi)
 - GitLab: [zagyarakushi](https://gitlab.com/zagyarakushi)
